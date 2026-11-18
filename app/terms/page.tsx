@@ -1,0 +1,3 @@
+import type { Metadata } from "next";
+export const metadata:Metadata={title:"Terms & Conditions"};
+export default function TermsPage(){return <article className="bg-[#f4f2ed] px-5 pb-24 pt-40"><div className="container-x max-w-3xl"><h1 className="heading-lg font-semibold">Terms &amp; Conditions</h1><p className="mt-8 leading-7 text-black/65">These terms govern use of the CirklX website and enquiries about our creative and social media services. Project scope, timelines, fees, usage rights and deliverables are confirmed in the relevant written proposal or service agreement.</p><p className="mt-5 leading-7 text-black/65">For questions, contact cirklx.agency@gmail.com.</p></div></article>}

@@ -1,0 +1,72 @@
+"use client";
+
+import Image from "next/image";
+import { Pause, Play, Volume2, VolumeX } from "lucide-react";
+import { useRef, useState } from "react";
+import { FaInstagram } from "react-icons/fa";
+
+export type FeaturedReel = { id: number; video: string; poster: string; handle: string; followers: string };
+const homeReels: FeaturedReel[] = [
+  { id: 1, video: "/video1-opt.mp4", poster: "/thumb1.png", handle: "@logicgpt", followers: "403k followers" },
+  { id: 2, video: "/video2-opt.mp4", poster: "/thumb3.png", handle: "@mr_techog", followers: "215k followers" },
+  { id: 3, video: "/video3-opt.mp4", poster: "/thumb4.png", handle: "@logicgpt", followers: "403k followers" },
+  { id: 4, video: "/video4-opt.mp4", poster: "/thumb2.png", handle: "@mr_techog", followers: "215k followers" },
+  { id: 5, video: "/video5-opt.mp4", poster: "/thumb3.png", handle: "@uditgpt", followers: "732k followers" },
+  { id: 6, video: "/video6-opt.mp4", poster: "/thumb6.png", handle: "@dr.himanshu_grover_", followers: "657k followers" },
+  { id: 7, video: "/video7-opt.mp4", poster: "/thumb7.png", handle: "@fit.niya", followers: "73.1k followers" },
+  { id: 8, video: "/video8-opt.mp4", poster: "/thumb5.png", handle: "@dr.himanshu_grover_", followers: "657k followers" },
+  { id: 9, video: "/video9-opt.mp4", poster: "/thumb9.png", handle: "@houseofbinti", followers: "23.6k followers" },
+  { id: 10, video: "/video10-opt.mp4", poster: "/thumb8.png", handle: "@fit.niya", followers: "73.1k followers" },
+];
+
+function ReelCard({ reel, rail = false, onPlaybackChange }: { reel: FeaturedReel; rail?: boolean; onPlaybackChange?: (playing: boolean) => void }) {
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const [playing, setPlaying] = useState(false);
+  const [muted, setMuted] = useState(true);
+
+  const togglePlay = async () => {
+    const video = videoRef.current;
+    if (!video) return;
+    if (video.paused) await video.play();
+    else video.pause();
+  };
+
+  const toggleMute = () => {
+    const video = videoRef.current;
+    if (!video) return;
+    video.muted = !video.muted;
+    setMuted(video.muted);
+  };
+
+  return <article className={`group relative aspect-[3/4] w-[220px] min-w-[220px] overflow-hidden rounded-[18px] bg-black sm:w-[260px] sm:min-w-[260px] ${rail ? "lg:w-[280px] lg:min-w-[280px]" : "lg:w-auto lg:min-w-0"}`}>
+    <Image src={reel.poster} alt={`${reel.handle} featured reel`} fill sizes="(max-width: 640px) 45vw, 280px" className={`object-cover transition-opacity ${playing ? "opacity-0" : "opacity-100"}`} />
+    <video ref={videoRef} src={reel.video} poster={reel.poster} preload="metadata" loop muted playsInline onPlay={() => { setPlaying(true); onPlaybackChange?.(true); }} onPause={() => { setPlaying(false); onPlaybackChange?.(false); }} className="absolute inset-0 h-full w-full object-cover" aria-label={`${reel.handle} featured video`} />
+    <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/75" />
+    <button type="button" onClick={togglePlay} aria-label={playing ? "Pause featured reel" : "Play featured reel"} className="absolute left-1/2 top-1/2 z-10 grid size-12 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full bg-[#9b7868]/85 text-white transition hover:scale-105 md:size-14">
+      {playing ? <Pause size={20} fill="currentColor" /> : <Play className="translate-x-px" size={20} fill="currentColor" />}
+    </button>
+    {playing && <button type="button" onClick={toggleMute} aria-label={muted ? "Unmute featured reel" : "Mute featured reel"} className="absolute right-3 top-3 z-10 grid size-9 place-items-center rounded-full bg-black/45 text-white">{muted ? <VolumeX size={16}/> : <Volume2 size={16}/>}</button>}
+    <div className="absolute inset-x-3 bottom-3 z-10 flex items-center gap-2 text-white">
+      <span className="grid size-7 shrink-0 place-items-center rounded-[7px] bg-gradient-to-br from-[#ffd267] via-[#eb3d83] to-[#6848d7]"><FaInstagram size={17}/></span>
+      <span className="min-w-0 leading-tight"><strong className="block truncate text-xs">{reel.handle}</strong><span className="block text-[10px] text-white/65">{reel.followers}</span></span>
+    </div>
+  </article>;
+}
+
+export function FeaturedReels({ items = homeReels }: { items?: FeaturedReel[] }) {
+  const isHomeRail = items === homeReels;
+  const [playingCount, setPlayingCount] = useState(0);
+  const handlePlaybackChange = (isPlaying: boolean) => setPlayingCount(count => Math.max(0, count + (isPlaying ? 1 : -1)));
+
+  if (!isHomeRail) return <div className="rail flex gap-3 overflow-x-auto px-5 pb-2 md:gap-5 md:px-0 lg:grid lg:grid-cols-4 lg:overflow-visible">
+    {items.map(reel => <ReelCard key={reel.id} reel={reel} />)}
+  </div>;
+
+  return <div className={`continuous-slider ${playingCount ? "is-paused" : ""}`}>
+    <div className="continuous-track continuous-track--reels">
+      {[0, 1].map(copy => <div className="continuous-group gap-3 pr-3 md:gap-5 md:pr-5" key={copy}>
+        {items.map(reel => <ReelCard key={`${copy}-${reel.id}`} reel={reel} rail onPlaybackChange={handlePlaybackChange} />)}
+      </div>)}
+    </div>
+  </div>;
+}

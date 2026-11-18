@@ -1,0 +1,3 @@
+import type { Metadata } from "next";
+export const metadata:Metadata={title:"Privacy Policy"};
+export default function PrivacyPage(){return <article className="bg-[#f4f2ed] px-5 pb-24 pt-40"><div className="container-x max-w-3xl"><h1 className="heading-lg font-semibold">Privacy Policy</h1><p className="mt-8 leading-7 text-black/65">CirklX uses information submitted through this website only to respond to enquiries, provide requested services and maintain relevant business records. We do not sell personal information.</p><p className="mt-5 leading-7 text-black/65">You may request access, correction or deletion by emailing cirklx.agency@gmail.com.</p></div></article>}
