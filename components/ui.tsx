@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { ArrowUpRight } from "lucide-react";
 
 export function Cta({ href = "/contact", children = "Book A Free Meeting", inverted = false, lightOutline = false }: { href?: string; children?: React.ReactNode; inverted?: boolean; lightOutline?: boolean }) {
@@ -20,5 +21,8 @@ export function PageHero({ title, accent, description }: { title: string; accent
 }
 
 export function Logo({ dark = true }: { dark?: boolean }) {
-  return <span className="flex items-center gap-2 font-bold tracking-tight"><span className="relative block h-8 w-8"><span className={`absolute left-0 top-2 h-4 w-3 ${dark ? "bg-white" : "bg-[#15140f]"}`} /><span className={`absolute left-2 top-1 h-6 w-2 ${dark ? "bg-white" : "bg-[#15140f]"}`} /><span className="absolute right-0 top-2.5 h-3 w-3 rounded-full bg-[#d6ff01]" /></span><span>CirklX</span></span>;
+  return <span className="flex items-center gap-2 font-bold tracking-tight">
+    <Image src={dark ? "/white.png" : "/black.png"} alt="" width={36} height={32} className="h-8 w-9 object-contain" priority />
+    <span>CirklX</span>
+  </span>;
 }

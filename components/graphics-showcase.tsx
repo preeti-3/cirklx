@@ -1,29 +1,37 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowUpRight } from "lucide-react";
-import { graphics } from "@/lib/content";
 
-const graphicNames = [
-  "Gearix", "Easter Collection", "Geeta Syrup", "Easter Decor", "Burger Wings", "Geeta Syrup",
-  "Gearix", "Geeta Syrup", "Geeta Syrup", "Burger Wings", "Easter", "Geeta Syrup", "Gearix",
-  "Easter", "Burger Wings", "BSM Uniex Salon", "Hydra Facial", "Kavya", "CirklX", "Jewellery Box",
-  "Tsuki", "Hisar College", "Tsuki", "Haircut & Beard",
-];
+import { graphics } from '@/lib/content';
+
+function GraphicCard({ src, copy }: { src: string; copy: number }) {
+  return <article className="relative h-[387px] w-[280px] shrink-0 overflow-hidden rounded-[20px] border border-black/10 bg-white sm:h-[446px] sm:w-[323px]">
+    <div className="absolute inset-x-[10px] top-[10px] h-[329px] overflow-hidden rounded-[20px] sm:inset-x-[11px] sm:top-[11px] sm:h-[379px]">
+      <Image src={src} alt={`CirklX portfolio graphic ${copy + 1}`} fill sizes="(max-width: 640px) 260px, 299px" className="object-cover" />
+    </div>
+    <div className="absolute inset-x-[10px] bottom-[11px] flex h-6 items-center justify-between opacity-40 sm:inset-x-[11px] sm:bottom-[16px]">
+      <div className="flex items-center gap-[9px]">
+        <Image src="/figma/exact/graphic-like.svg" alt="Like" width={24} height={24} />
+        <Image src="/figma/exact/graphic-comment.svg" alt="Comment" width={24} height={24} />
+        <Image src="/figma/exact/graphic-share.svg" alt="Share" width={24} height={24} />
+      </div>
+      <span className="grid size-6 place-items-center overflow-hidden"><Image src="/figma/exact/graphic-save.svg" alt="Save" width={16} height={20} /></span>
+    </div>
+  </article>;
+}
 
 export function GraphicsShowcase({ showViewAll = true }: { showViewAll?: boolean }) {
   return <>
     <div className="continuous-slider">
       <div className="continuous-track continuous-track--graphics">
-        {[0, 1].map(copy => <div className="continuous-group gap-5 pr-5 md:gap-6 md:pr-6" key={copy}>
-          {graphics.map((src,index)=><article key={`${copy}-${src}`} className="group min-w-[250px] md:min-w-[280px]">
-            <div className="relative aspect-[14/19] overflow-hidden rounded-[24px] bg-white">
-              <Image src={src} alt={`${graphicNames[index]} social media design`} fill sizes="(max-width: 768px) 250px, 280px" className="object-cover transition-transform duration-500 group-hover:scale-105" />
-            </div>
-            <p className="mt-2.5 text-center text-[11px] font-medium tracking-wide text-black/75">{graphicNames[index]}</p>
-          </article>)}
+        {[0, 1].map(group => <div key={group} className="continuous-group gap-[21px] pr-[21px]">
+          {graphics.map((src, index) => <GraphicCard key={`${group}-${index}`} src={src} copy={index} />)}
         </div>)}
       </div>
     </div>
-    {showViewAll && <div className="mt-10 text-center"><Link href="/work" className="inline-flex h-11 items-center gap-2 rounded-full border border-[#15140f] bg-[#d6ff01] px-6 text-sm font-semibold">View All <ArrowUpRight size={15}/></Link></div>}
+    {showViewAll && <div className="mt-[50px] text-center">
+      <Link href="/work" className="inline-flex h-[50px] items-center gap-2 rounded-full border border-[#15140f] bg-[#d6ff01] px-[23px] text-base font-semibold shadow-[0_0_26px_rgba(214,255,1,.15)] transition hover:-translate-y-0.5 hover:bg-white">
+        View All <Image src="/figma/exact/arrow-up-right.svg" alt="" width={16} height={16} />
+      </Link>
+    </div>}
   </>;
 }

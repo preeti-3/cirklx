@@ -18,7 +18,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en" className={`${sans.variable} ${serif.variable}`}>
-      <body className="font-[family-name:var(--font-sans)] antialiased">
+      <body className="font-sans antialiased">
         <SiteHeader />
         <main>{children}</main>
         <SiteFooter />
