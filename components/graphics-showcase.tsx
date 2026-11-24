@@ -21,9 +21,9 @@ function GraphicCard({ src, copy }: { src: string; copy: number }) {
 
 export function GraphicsShowcase({ showViewAll = true }: { showViewAll?: boolean }) {
   return <>
-    <div className="continuous-slider">
+    <div className="continuous-slider touch-slider" role="region" aria-label="Portfolio graphics — swipe to browse" tabIndex={0}>
       <div className="continuous-track continuous-track--graphics">
-        {[0, 1].map(group => <div key={group} className="continuous-group gap-[21px] pr-[21px]">
+        {[0, 1].map(group => <div key={group} data-copy={group} className="continuous-group gap-[21px] pr-[21px]">
           {graphics.map((src, index) => <GraphicCard key={`${group}-${index}`} src={src} copy={index} />)}
         </div>)}
       </div>

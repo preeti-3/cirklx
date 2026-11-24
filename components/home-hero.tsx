@@ -18,9 +18,9 @@ function HeadlineBadge() {
     return () => window.clearInterval(timer);
   }, [reduceMotion]);
   const Icon = headlineIcons[active];
-  return <span className="headline-badge mx-1 inline-grid size-[34px] translate-y-[5px] place-items-center overflow-hidden align-baseline md:size-[53px] md:translate-y-[9px]" aria-hidden="true">
+  return <span className="headline-badge mx-1 inline-grid size-8.5 translate-y-1.25 place-items-center overflow-hidden align-baseline md:size-13.25 md:-translate-y-0.5 hover:rotate-12 hover:scale-110 transition-all duration-300" aria-hidden="true">
     <AnimatePresence mode="wait" initial={false}>
-      <motion.span key={active} initial={{ opacity: 0, scale: .6, rotate: -20 }} animate={{ opacity: 1, scale: 1, rotate: 0 }} exit={{ opacity: 0, scale: .6, rotate: 20 }} transition={{ duration: reduceMotion ? 0 : .35, ease: 'easeOut' }}><Icon className="size-[18px] text-[#d6ff01] md:size-[27px]" /></motion.span>
+      <motion.span key={active} initial={{ opacity: 0, scale: .6, rotate: -20 }} animate={{ opacity: 1, scale: 1, rotate: 0 }} exit={{ opacity: 0, scale: .6, rotate: 20 }} transition={{ duration: reduceMotion ? 0 : .35, ease: 'easeOut' }}><Icon className="size-4.5 text-[#d6ff01] md:size-6.75" /></motion.span>
     </AnimatePresence>
   </span>;
 }
@@ -97,7 +97,7 @@ export function HomeHero() {
     <video autoPlay muted loop playsInline disablePictureInPicture poster="/hero-poster.webp" preload="metadata" src="/video-opt.mp4" className="absolute inset-0 h-full w-full object-cover" aria-hidden="true" />
     <div className="absolute inset-0 bg-black/45" />
 
-    <div className="absolute left-1/2 top-[160px] z-10 flex w-[calc(100%-40px)] -translate-x-1/2 flex-col items-center text-center md:top-[200px] md:w-[1134px]">
+    <div className="absolute left-1/2 top-[160px] z-10 flex w-[calc(100%-40px)] max-w-[1134px] -translate-x-1/2 flex-col items-center text-center md:top-[200px]">
       <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/10 px-[10px] py-[6px] text-[12px] text-white shadow-[0_2px_10px_rgba(0,0,0,.04)] md:text-sm">
         <Image src="/figma/exact/rating-star.svg" alt="" width={12} height={12} />
         4.9/5 - Hisar&apos;s #1 SMM Agency

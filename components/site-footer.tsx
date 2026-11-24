@@ -4,7 +4,7 @@ import { Mail, MapPin, Phone } from "lucide-react";
 import { FaFacebookF, FaInstagram, FaTiktok, FaYoutube } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
 
-const navigation = [["Home","/"],["About","/about"],["Service","/service"],["Work","/work"],["Contact","/contact"],["Blog","/blog"]] as const;
+const navigation = [["Home","/"],["About","/about"],["Service","/service"],["Event","/events"],["Work","/work"],["Contact","/contact"],["Blog","/blog"]] as const;
 
 export function SiteFooter() {
   return <footer data-theme="dark" className="text-white">
@@ -17,7 +17,7 @@ export function SiteFooter() {
     </section>
 
     <div className="bg-[#15140f] pt-[50px]">
-      <div className="mx-auto grid max-w-[1140px] gap-10 px-5 pb-10 md:grid-cols-[235px_140px_330px_1fr] md:justify-between md:px-0">
+      <div className="mx-auto grid w-full max-w-[1180px] gap-10 px-5 pb-10 md:grid-cols-2 xl:grid-cols-[235px_140px_330px_1fr] xl:justify-between">
         <div>
           <div className="flex items-center gap-2">
             <Image src="/figma/exact/hero-logo.png" alt="" width={47} height={47} className="size-[47px] object-contain" />
@@ -37,7 +37,7 @@ export function SiteFooter() {
             <p className="flex items-start gap-[14px]"><ContactIcon><MapPin size={15}/></ContactIcon><span>DSS 79, Basement, Near Lemon Tree, Old Court Complex, Hisar, Haryana, India — 125001</span></p>
           </div>
         </div>
-        <div className="flex gap-3 md:justify-end">
+        <div className="flex gap-3 xl:justify-end">
           <Social href="https://www.instagram.com/cirklx.agency/" label="Instagram"><FaInstagram size={19}/></Social>
           <Social href="https://www.facebook.com/cirklxagency/" label="Facebook"><FaFacebookF size={18}/></Social>
           <Social href="https://twitter.com" label="X"><FaXTwitter size={18}/></Social>

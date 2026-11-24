@@ -1,18 +1,18 @@
 const before = [["67", "Profile Clicks"], ["0", "Followers"], ["5K", "Likes"]] as const;
-const after = [["1.9K", "Profile Clicks"], ["40K+", "Followers"], ["30K", "Likes"]] as const;
+const after = [["1.9K", "Profile Clicks"], ["40K+", "Views"], ["30K", "Likes"]] as const;
 
 export function GrowthImpact() {
   return <section className="growth-impact bg-[#15140f] text-white">
-    <div className="relative mx-auto hidden h-[410px] max-w-[1440px] md:block">
+    <div className="relative mx-auto hidden h-[410px] max-w-[1440px] lg:block">
       <p className="absolute left-[17%] top-[101px] text-[11px] uppercase text-white/30">Before</p>
       <p className="absolute right-[17%] top-[101px] text-[11px] uppercase text-white/30">After</p>
       <svg className="absolute inset-0 h-full w-full" viewBox="0 0 1440 410" preserveAspectRatio="none" fill="none" aria-hidden="true">
-        <path d="M307 147H405Q431 147 431 173V287Q431 315 405 315H307" stroke="#4a4942" />
-        <path d="M307 232H595M431 232V262" stroke="#d6ff01" strokeWidth="3" />
-        <path d="M245 147H307M245 232H307M245 315H307" stroke="#d6ff01" strokeWidth="3" />
-        <path d="M1133 147H1035Q1009 147 1009 173V287Q1009 315 1035 315H1133" stroke="#4a4942" />
-        <path d="M845 232H1133M1009 232V262" stroke="#d6ff01" strokeWidth="3" />
-        <path d="M1133 147H1195M1133 232H1195M1133 315H1195" stroke="#d6ff01" strokeWidth="3" />
+        <NeonPath d="M245 147H405Q431 147 431 173V206Q431 232 457 232H595" />
+        <NeonPath d="M245 232H595" delay={-1} />
+        <NeonPath d="M245 315H405Q431 315 431 289V258Q431 232 457 232H595" delay={-2} />
+        <NeonPath d="M845 232H983Q1009 232 1009 206V173Q1009 147 1035 147H1195" />
+        <NeonPath d="M845 232H1195" delay={-1} />
+        <NeonPath d="M845 232H983Q1009 232 1009 258V289Q1009 315 1035 315H1195" delay={-2} />
       </svg>
       <DesktopPill className="left-[8.4%] top-[131px]">67 Profile Clicks</DesktopPill>
       <DesktopPill className="left-[11.4%] top-[216px]">0 Followers</DesktopPill>
@@ -27,10 +27,10 @@ export function GrowthImpact() {
         <p className="mt-8 text-[21px] font-semibold">CirklX</p>
       </div>
     </div>
-    <div className="relative mx-auto h-[660px] max-w-[390px] px-[17px] md:hidden">
+    <div className="relative mx-auto h-[660px] max-w-[390px] px-[17px] lg:hidden">
       <svg className="absolute left-0 top-0 h-[320px] w-full" viewBox="0 0 390 320" fill="none" aria-hidden="true">
-        <path d="M195 147H104Q88 147 88 165V258M195 147H254Q270 147 270 165V258" stroke="#55544c" />
-        <path d="M88 147H143M248 147H270M88 258V280M270 258V280" stroke="#d6ff01" strokeWidth="3" />
+        <NeonPath d="M88 280V165Q88 147 104 147H195" />
+        <NeonPath d="M195 147H254Q270 147 270 165V280" delay={-1.5} />
       </svg>
       <div className="absolute left-1/2 top-[107px] -translate-x-1/2 text-center">
         <BrandCore mobile />
@@ -42,6 +42,13 @@ export function GrowthImpact() {
       </div>
     </div>
   </section>;
+}
+
+function NeonPath({ d, delay = 0 }: { d: string; delay?: number }) {
+  return <>
+    <path d={d} stroke="#4a4942" />
+    <path className="growth-neon" d={d} pathLength={1} stroke="#d6ff01" strokeWidth="3" strokeLinecap="round" strokeDasharray="0.2 0.8" style={{ animationDelay: `${delay}s` }} />
+  </>;
 }
 
 function BrandCore({mobile = false}:{mobile?:boolean}) {

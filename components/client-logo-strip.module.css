@@ -1,0 +1,56 @@
+.strip {
+  overflow: hidden;
+  border-block: 1px solid rgb(0 0 0 / 10%);
+  background: var(--cream);
+}
+
+.track {
+  display: flex;
+  width: max-content;
+  animation: client-marquee 30s linear infinite;
+  will-change: transform;
+}
+
+.group {
+  display: flex;
+  flex: none;
+  width: max(100vw, 1176px);
+}
+
+.cell {
+  display: flex;
+  flex: 1;
+  min-width: 0;
+  height: 102px;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border-right: 1px solid rgb(0 0 0 / 10%);
+}
+
+.logo {
+  flex: none;
+  max-width: none;
+  height: auto;
+}
+
+@keyframes client-marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .strip {
+    overflow-x: auto;
+  }
+
+  .track {
+    animation: none;
+    will-change: auto;
+  }
+
+  .group[aria-hidden="true"] {
+    display: none;
+  }
+}

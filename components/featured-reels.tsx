@@ -35,7 +35,7 @@ function ReelCard({ reel, rail = false, onPlaybackChange }: { reel: FeaturedReel
   const togglePlay = async () => {
     const video = videoRef.current;
     if (!video) return;
-    if (video.paused) await video.play();
+    if (video.paused) await video.play().catch(() => undefined);
     else video.pause();
   };
 
@@ -47,6 +47,7 @@ function ReelCard({ reel, rail = false, onPlaybackChange }: { reel: FeaturedReel
   };
 
   const playOnHover = () => {
+    if (!window.matchMedia("(hover: hover) and (pointer: fine)").matches) return;
     const video = videoRef.current;
     if (video?.paused) void video.play().catch(() => undefined);
   };
@@ -57,7 +58,7 @@ function ReelCard({ reel, rail = false, onPlaybackChange }: { reel: FeaturedReel
     <Image src={reel.poster} alt={`${reel.handle} featured reel`} fill sizes="(max-width: 640px) 45vw, 280px" className={`object-cover transition-opacity ${playing ? "opacity-0" : "opacity-100"}`} />
     <video ref={videoRef} src={reel.video} poster={reel.poster} preload="metadata" loop muted playsInline onPlay={() => { setPlaying(true); onPlaybackChange?.(true); }} onPause={() => { setPlaying(false); onPlaybackChange?.(false); }} className="absolute inset-0 h-full w-full object-cover" aria-label={`${reel.handle} featured video`} />
     <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/75" />
-    <button type="button" onClick={togglePlay} aria-label={playing ? "Pause featured reel" : "Play featured reel"} className={`absolute left-1/2 top-1/2 z-10 grid size-12 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full bg-[#9b7868]/85 text-white transition hover:scale-105 md:size-14 ${playing ? "opacity-0 group-hover:opacity-100 group-focus-within:opacity-100" : "opacity-100"}`}>
+    <button type="button" onClick={togglePlay} aria-label={playing ? "Pause featured reel" : "Play featured reel"} className={`absolute left-1/2 top-1/2 z-10 grid size-12 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full bg-[#9b7868]/85 text-white transition hover:scale-105 md:size-14 ${playing ? "lg:opacity-0 group-hover:opacity-100 group-focus-within:opacity-100" : "opacity-100"}`}>
       {playing ? <Pause size={20} fill="currentColor" /> : <Play className="translate-x-px" size={20} fill="currentColor" />}
     </button>
     {playing && <button type="button" onClick={toggleMute} aria-label={muted ? "Unmute featured reel" : "Mute featured reel"} className="absolute right-3 top-3 z-10 grid size-9 place-items-center rounded-full bg-black/45 text-white">{muted ? <VolumeX size={16}/> : <Volume2 size={16}/>}</button>}
@@ -79,12 +80,12 @@ export function FeaturedReels({ items = homeReels }: { items?: FeaturedReel[] })
   </div>;
 
   return <>
-    <div className="rail mx-auto mb-[50px] flex max-w-max gap-3 overflow-x-auto px-5">
+    <div className="rail mx-auto mb-8 flex w-full max-w-max gap-3 overflow-x-auto px-5 md:mb-[50px]">
       {["All Reels", "School Reels", "Wedding Reels", "Office Reels"].map(label => <button key={label} type="button" onClick={() => setFilter(label)} className={`h-[45px] shrink-0 rounded-full border px-[23px] text-base font-semibold shadow-[0_0_26px_rgba(214,255,1,.08)] transition ${filter === label ? "border-[#15140f] bg-[#d6ff01] text-[#15140f]" : "border-[#15140f]/10 text-[#15140f]/70 hover:border-[#15140f]/30"}`}>{label}</button>)}
     </div>
-    <div className={`continuous-slider ${playingCount ? "is-paused" : ""}`}>
+    <div className={`continuous-slider touch-slider ${playingCount ? "is-paused" : ""}`} role="region" aria-label="Featured reels — swipe to browse" tabIndex={0}>
       <div className="continuous-track continuous-track--reels">
-        {[0, 1].map(copy => <div className="continuous-group gap-[21px] pr-[21px]" key={copy}>
+        {[0, 1].map(copy => <div className="continuous-group gap-[21px] pr-[21px]" key={copy} data-copy={copy}>
           {items.map(reel => <ReelCard key={`${copy}-${reel.id}`} reel={reel} rail onPlaybackChange={handlePlaybackChange} />)}
         </div>)}
       </div>

@@ -12,7 +12,7 @@ export function SectionTitle({ children, className = "" }: { children: React.Rea
 }
 
 export function PageHero({ title, accent, description }: { title: string; accent: string; description: string }) {
-  return <section className="hero-fabric flex min-h-[520px] items-center justify-center px-5 pb-20 pt-36 text-center text-white md:min-h-[520px]">
+  return <section className="hero-fabric flex min-h-[500px] items-center justify-center px-5 pb-20 pt-36 text-center text-white md:min-h-[550px]">
     <div className="max-w-2xl">
       <h1 className="heading-xl font-semibold">{title} <span className="serif text-[#d6ff01]">{accent}</span></h1>
       <p className="mx-auto mt-5 max-w-xl text-sm leading-6 text-white/70 md:text-base">{description}</p>

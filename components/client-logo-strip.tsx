@@ -1,9 +1,37 @@
 import Image from "next/image";
+import styles from "./client-logo-strip.module.css";
 
-const logos = ["/logo13.png","/logo16.png","/logo17.png","/logo3.png","/logo6.png","/logo14.png"];
+// Widths account for the transparent padding in the original logo assets.
+const logos = [
+  { src: "/logo13.png", name: "Cod it", width: 310 },
+  { src: "/logo16.png", name: "Mangal", width: 245 },
+  { src: "/logo17.png", name: "ME PRO", width: 260 },
+  { src: "/logo3.png", name: "Nagpal’s", width: 255 },
+  { src: "/logo6.png", name: "Geeta Syrup", width: 260 },
+  { src: "/logo14.png", name: "Command", width: 180 },
+];
 
 export function ClientLogoStrip() {
-  return <div className="overflow-x-auto border-y border-black/10 bg-[#f4f2ed] [scrollbar-width:none]"><div className="mx-auto flex min-w-[850px] max-w-[1440px]">
-    {logos.map((src,index)=><div key={src} className="relative flex h-[148px] min-w-0 flex-1 items-center justify-center border-r border-black/10 px-6 last:border-r-0"><Image src={src} alt={`CirklX client logo ${index+1}`} width={190} height={88} className="max-h-[88px] max-w-[190px] w-auto object-contain" /></div>)}
-  </div></div>;
+  return (
+    <div className={styles.strip} role="region" aria-label="Our clients">
+      <div className={styles.track}>
+        {[0, 1].map((copy) => (
+          <div className={styles.group} key={copy} aria-hidden={copy === 1 ? true : undefined}>
+            {logos.map(({ src, name, width }) => (
+              <div key={src} className={styles.cell}>
+                <Image
+                  src={src}
+                  alt={copy === 0 ? name : ""}
+                  width={width}
+                  height={Math.round(width * 500 / 1080)}
+                  className={styles.logo}
+                  style={{ width }}
+                />
+              </div>
+            ))}
+          </div>
+        ))}
+      </div>
+    </div>
+  );
 }
