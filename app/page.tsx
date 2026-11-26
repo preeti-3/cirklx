@@ -16,10 +16,10 @@ export const metadata: Metadata = {
 };
 const tools = [
   ["/instaIcon.png", "Instagram Reels"],
-  ["/icon4.png", "YouTube Shorts"],
-  ["/icon5.png", "Graphic Design"],
-  ["/icon1.png", "Video Edits"],
-  ["/icon2.png", "Motion Graphics"],
+  ["/icon4.webp", "YouTube Shorts"],
+  ["/icon5.webp", "Graphic Design"],
+  ["/icon1.webp", "Video Edits"],
+  ["/icon2.webp", "Motion Graphics"],
 ] as const;
 
 export default function HomePage() {
@@ -65,7 +65,7 @@ export default function HomePage() {
             {tools.map(([src, label]) => (
               <div
                 key={label}
-                className="card flex min-h-[112px] flex-col items-center justify-center gap-3 p-3 text-center text-xs font-medium md:min-h-32 md:text-sm"
+                className="card flex min-h-[112px] flex-col items-center justify-center gap-2 p-3 text-center text-xs font-medium last:col-span-2 md:min-h-32 md:gap-3 md:text-sm md:last:col-span-1"
               >
                 <Image
                   src={src}

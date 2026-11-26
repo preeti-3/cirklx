@@ -1,7 +1,7 @@
 export const processSteps = [
-  { image: "/Home1.png", title: "We Plan & Shoot Your Content", copy: "Every reel starts with a strategy. We study your brand and trends, then shoot professional content — on-location or studio — built to perform." },
-  { image: "/Home2.png", title: "Our Editors Bring It to Life", copy: "Raw footage becomes scroll-stopping reels — cut, styled, and optimized for Instagram, YouTube Shorts & Facebook, with fast turnaround." },
-  { image: "/Home3.png", title: "We Upload & Track Growth", copy: "We post at the right time with the right hashtags, then track views and engagement to keep improving your results." },
+  { image: "/Home1.webp", title: "We Plan & Shoot Your Content", copy: "Every reel starts with a strategy. We study your brand and trends, then shoot professional content — on-location or studio — built to perform." },
+  { image: "/Home2.webp", title: "Our Editors Bring It to Life", copy: "Raw footage becomes scroll-stopping reels — cut, styled, and optimized for Instagram, YouTube Shorts & Facebook, with fast turnaround." },
+  { image: "/Home3.webp", title: "We Upload & Track Growth", copy: "We post at the right time with the right hashtags, then track views and engagement to keep improving your results." },
 ];
 
 export const faqs = [

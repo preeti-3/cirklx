@@ -1,6 +1,21 @@
 const before = [["67", "Profile Clicks"], ["0", "Followers"], ["5K", "Likes"]] as const;
 const after = [["1.9K", "Profile Clicks"], ["40K+", "Views"], ["30K", "Likes"]] as const;
 
+// Recovered from the previous site's Work particle field. Keep this deterministic
+// so server markup and hydration use the same scattered positions.
+const particles = Array.from({ length: 180 }, (_, index) => {
+  const angle = ((index * 137.5) % 360) * Math.PI / 180;
+  const radius = 16 + ((index * 53) % 100) / 100 * 84;
+  const jitter = (index * 19) % 10 - 5;
+  return {
+    left: `${50 + Math.cos(angle) * radius / 3 + jitter * 0.2}%`,
+    top: `${50 + Math.sin(angle) * radius / 3 + jitter * 0.2}%`,
+    width: 1.4 + ((index * 7) % 3) * 0.55,
+    height: 1.4 + ((index * 7) % 3) * 0.55,
+    opacity: 0.22 + ((index * 31) % 60) / 100,
+  };
+});
+
 export function GrowthImpact() {
   return <section className="growth-impact bg-[#15140f] text-white">
     <div className="relative mx-auto hidden h-[410px] max-w-[1440px] lg:block">
@@ -22,9 +37,9 @@ export function GrowthImpact() {
       <DesktopPill className="right-[10.8%] top-[216px]">40K+ Views</DesktopPill>
       <DesktopPill className="right-[11.8%] top-[299px]">30K Likes</DesktopPill>
       <DesktopPill lime className="right-[24.2%] top-[216px]">2K+ Followers</DesktopPill>
-      <div className="absolute left-1/2 top-[198px] -translate-x-1/2 text-center">
+      <div className="absolute left-1/2 top-[192px] -translate-x-1/2 text-center">
         <BrandCore />
-        <p className="mt-8 text-[21px] font-semibold">CirklX</p>
+        <p className="mt-12 text-[26px] font-semibold">CirklX</p>
       </div>
     </div>
     <div className="relative mx-auto h-[660px] max-w-[390px] px-[17px] lg:hidden">
@@ -33,8 +48,8 @@ export function GrowthImpact() {
         <NeonPath d="M195 147H254Q270 147 270 165V280" delay={-1.5} />
       </svg>
       <div className="absolute left-1/2 top-[107px] -translate-x-1/2 text-center">
-        <BrandCore mobile />
-        <p className="mt-6 text-[26px] font-semibold">CirklX</p>
+        <BrandCore />
+        <p className="mt-12 text-[26px] font-semibold">CirklX</p>
       </div>
       <div className="absolute inset-x-[17px] top-[280px] grid grid-cols-2 gap-[21px]">
         <MobileStats title="Before" items={before} />
@@ -51,9 +66,16 @@ function NeonPath({ d, delay = 0 }: { d: string; delay?: number }) {
   </>;
 }
 
-function BrandCore({mobile = false}:{mobile?:boolean}) {
-  return <div className={`growth-orbit relative grid place-items-center rounded-full border border-white/15 bg-[#535349] shadow-[0_0_25px_rgba(214,255,1,.08)] ${mobile ? "size-[80px]" : "size-[60px]"}`}>
-    <span className={`${mobile ? "size-[42px]" : "size-[36px]"} block bg-contain bg-center bg-no-repeat`} style={{backgroundImage:"url('/white.png')"}} aria-hidden="true" />
+function BrandCore() {
+  return <div className="growth-core relative grid size-20 place-items-center" aria-hidden="true">
+    <div className="growth-particle-field">
+      <div className="growth-particle-rotation">
+        {particles.map((style, index) => <span key={index} style={style} />)}
+      </div>
+    </div>
+    <div className="relative z-10 grid size-20 place-items-center rounded-full border border-white/20 bg-[#535349] shadow-[0_0_26px_rgba(214,255,1,.12)]">
+      <span className="block size-[42px] bg-contain bg-center bg-no-repeat" style={{ backgroundImage: "url('/white.png')" }} />
+    </div>
   </div>;
 }
 

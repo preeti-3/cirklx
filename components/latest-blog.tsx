@@ -21,12 +21,12 @@ export function LatestBlog() {
       <SectionTitle className="mb-8 text-center md:mb-12">Our Latest <span className="serif">Blog</span></SectionTitle>
       <div ref={rail} onScroll={event => setPosition(event.currentTarget.scrollLeft / Math.max(1, event.currentTarget.scrollWidth - event.currentTarget.clientWidth))} className="rail flex gap-6 overflow-x-auto pb-2" tabIndex={0} role="region" aria-label="Latest blog posts">
         {latestPosts.map(post => <article key={post.slug} className="w-[85%] shrink-0 overflow-hidden rounded-[20px] bg-white sm:w-[calc(50%-12px)] lg:w-[calc((100%-48px)/3)]">
-          <Link href={`/blog#${post.slug}`} tabIndex={-1} aria-hidden="true" className="relative block aspect-[364/267]"><Image src={post.image} alt="" fill sizes="(max-width: 640px) 85vw, 364px" className="object-cover" /></Link>
+          <Link href={`/blog/${post.slug}`} tabIndex={-1} aria-hidden="true" className="relative block aspect-[364/267]"><Image src={post.image} alt="" fill sizes="(max-width: 640px) 85vw, 364px" className="object-cover" /></Link>
           <div className="p-5">
             <time className="rounded-full bg-black/5 px-3 py-1 text-xs text-black/60">{post.date}</time>
             <h3 className="mt-3 text-xl font-semibold">{post.title}</h3>
             <p className="mt-2 text-sm leading-relaxed text-black/55">{post.description}</p>
-            <Link href={`/blog#${post.slug}`} className="relative mt-4 inline-flex min-h-11 items-center gap-2 text-sm font-semibold">Read More <ArrowRight size={16} /><span className="sr-only">: {post.title}</span></Link>
+            <Link href={`/blog/${post.slug}`} className="relative mt-4 inline-flex min-h-11 items-center gap-2 text-sm font-semibold">Read More <ArrowRight size={16} /><span className="sr-only">: {post.title}</span></Link>
           </div>
         </article>)}
       </div>

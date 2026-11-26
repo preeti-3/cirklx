@@ -7,7 +7,7 @@ import { FaXTwitter } from "react-icons/fa6";
 const navigation = [["Home","/"],["About","/about"],["Service","/service"],["Event","/events"],["Work","/work"],["Contact","/contact"],["Blog","/blog"]] as const;
 
 export function SiteFooter() {
-  return <footer data-theme="dark" className="text-white">
+  return <footer data-theme="dark" className="site-footer text-white">
     <section data-theme="light" className="flex h-[354px] flex-col items-center justify-center bg-[#d6ff01] px-5 text-center text-[#15140f]">
       <div>
         <h2 className="text-[38px] font-semibold leading-none tracking-[-.035em] md:text-[48px]">Ready to make <span className="serif">your videos go viral?</span></h2>
@@ -17,19 +17,19 @@ export function SiteFooter() {
     </section>
 
     <div className="bg-[#15140f] pt-[50px]">
-      <div className="mx-auto grid w-full max-w-[1180px] gap-10 px-5 pb-10 md:grid-cols-2 xl:grid-cols-[235px_140px_330px_1fr] xl:justify-between">
-        <div>
+      <div className="footer-grid mx-auto grid w-full max-w-[1180px] gap-10 px-5 pb-10 md:grid-cols-2 xl:grid-cols-[235px_140px_330px_1fr] xl:justify-between">
+        <div className="footer-brand">
           <div className="flex items-center gap-2">
             <Image src="/figma/exact/hero-logo.png" alt="" width={47} height={47} className="size-[47px] object-contain" />
             <strong className="text-[27px] tracking-[-.025em]">CirklX</strong>
           </div>
           <p className="mt-3 text-base leading-[1.5] text-white/70">Premium video editing for creators who want to go viral.</p>
         </div>
-        <div>
+        <div className="footer-navigation">
           <FooterLabel>Navigation</FooterLabel>
           <nav className="grid gap-4 text-base text-white/45" aria-label="Footer navigation">{navigation.map(([label,href]) => <Link key={href} href={href} className="transition hover:text-[#d6ff01]">{label}</Link>)}</nav>
         </div>
-        <div>
+        <div className="footer-contact">
           <FooterLabel>Get In Touch</FooterLabel>
           <div className="grid gap-4 text-base leading-[1.35] text-white/45">
             <a className="flex items-center gap-[14px] transition hover:text-[#d6ff01]" href="mailto:cirklx.agency@gmail.com"><ContactIcon><Mail size={15}/></ContactIcon>cirklX.agency@gmail.com</a>
@@ -37,7 +37,7 @@ export function SiteFooter() {
             <p className="flex items-start gap-[14px]"><ContactIcon><MapPin size={15}/></ContactIcon><span>DSS 79, Basement, Near Lemon Tree, Old Court Complex, Hisar, Haryana, India — 125001</span></p>
           </div>
         </div>
-        <div className="flex gap-3 xl:justify-end">
+        <div className="footer-socials flex gap-3 xl:justify-end">
           <Social href="https://www.instagram.com/cirklx.agency/" label="Instagram"><FaInstagram size={19}/></Social>
           <Social href="https://www.facebook.com/cirklxagency/" label="Facebook"><FaFacebookF size={18}/></Social>
           <Social href="https://twitter.com" label="X"><FaXTwitter size={18}/></Social>
@@ -45,7 +45,7 @@ export function SiteFooter() {
           <Social href="https://youtube.com" label="YouTube"><FaYoutube size={19}/></Social>
         </div>
       </div>
-      <div className="border-t border-white/[.06] px-5 py-5 md:px-[84px]">
+      <div className="footer-legal border-t border-white/[.06] px-5 py-5 md:px-[84px]">
         <div className="grid items-center text-base text-white/35 sm:grid-cols-[1fr_auto_1fr]"><Link href="/terms" className="hover:text-[#d6ff01]">Terms &amp; Conditions</Link><span className="hidden sm:block">|</span><Link href="/privacy" className="text-right hover:text-[#d6ff01]">Privacy Policy</Link></div>
         <p className="mt-[18px] text-center text-base text-white/25">© 2026 CirklX. All rights reserved.</p>
       </div>

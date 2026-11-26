@@ -15,16 +15,16 @@ const instagramProfiles: Record<string, string> = {
   "@houseofbinti": "https://www.instagram.com/houseofbinti/",
 };
 const homeReels: FeaturedReel[] = [
-  { id: 1, video: "/video1-opt.mp4", poster: "/thumb1.png", handle: "@logicgpt", followers: "403k followers" },
-  { id: 2, video: "/video2-opt.mp4", poster: "/thumb3.png", handle: "@mr_techog", followers: "215k followers" },
-  { id: 3, video: "/video3-opt.mp4", poster: "/thumb4.png", handle: "@logicgpt", followers: "403k followers" },
-  { id: 4, video: "/video4-opt.mp4", poster: "/thumb2.png", handle: "@mr_techog", followers: "215k followers" },
-  { id: 5, video: "/video5-opt.mp4", poster: "/thumb3.png", handle: "@uditgpt", followers: "732k followers" },
-  { id: 6, video: "/video6-opt.mp4", poster: "/thumb6.png", handle: "@dr.himanshu_grover_", followers: "657k followers" },
-  { id: 7, video: "/video7-opt.mp4", poster: "/thumb7.png", handle: "@fit.niya", followers: "73.1k followers" },
-  { id: 8, video: "/video8-opt.mp4", poster: "/thumb5.png", handle: "@dr.himanshu_grover_", followers: "657k followers" },
-  { id: 9, video: "/video9-opt.mp4", poster: "/thumb9.png", handle: "@houseofbinti", followers: "23.6k followers" },
-  { id: 10, video: "/video10-opt.mp4", poster: "/thumb8.png", handle: "@fit.niya", followers: "73.1k followers" },
+  { id: 1, video: "/video1-opt.mp4", poster: "/thumb1.webp", handle: "@logicgpt", followers: "403k followers" },
+  { id: 2, video: "/video2-opt.mp4", poster: "/thumb3.webp", handle: "@mr_techog", followers: "215k followers" },
+  { id: 3, video: "/video3-opt.mp4", poster: "/thumb4.webp", handle: "@logicgpt", followers: "403k followers" },
+  { id: 4, video: "/video4-opt.mp4", poster: "/thumb2.webp", handle: "@mr_techog", followers: "215k followers" },
+  { id: 5, video: "/video5-opt.mp4", poster: "/thumb3.webp", handle: "@uditgpt", followers: "732k followers" },
+  { id: 6, video: "/video6-opt.mp4", poster: "/thumb6.webp", handle: "@dr.himanshu_grover_", followers: "657k followers" },
+  { id: 7, video: "/video7-opt.mp4", poster: "/thumb7.webp", handle: "@fit.niya", followers: "73.1k followers" },
+  { id: 8, video: "/video8-opt.mp4", poster: "/thumb5.webp", handle: "@dr.himanshu_grover_", followers: "657k followers" },
+  { id: 9, video: "/video9-opt.mp4", poster: "/thumb9.webp", handle: "@houseofbinti", followers: "23.6k followers" },
+  { id: 10, video: "/video10-opt.mp4", poster: "/thumb8.webp", handle: "@fit.niya", followers: "73.1k followers" },
 ];
 
 function ReelCard({ reel, rail = false, onPlaybackChange }: { reel: FeaturedReel; rail?: boolean; onPlaybackChange?: (playing: boolean) => void }) {
@@ -54,9 +54,9 @@ function ReelCard({ reel, rail = false, onPlaybackChange }: { reel: FeaturedReel
 
   const pauseOnLeave = () => videoRef.current?.pause();
 
-  return <article onMouseEnter={playOnHover} onMouseLeave={pauseOnLeave} className={`group relative aspect-[9/16] w-[220px] min-w-[220px] overflow-hidden rounded-[20px] bg-black sm:w-[280px] sm:min-w-[280px] ${rail ? "lg:w-[346.5px] lg:min-w-[346.5px]" : "lg:w-auto lg:min-w-0"}`}>
+  return <article onMouseEnter={playOnHover} onMouseLeave={pauseOnLeave} className={`group relative aspect-[9/16] w-[calc((100vw-48px)/2)] min-w-[calc((100vw-48px)/2)] max-w-[190px] overflow-hidden rounded-[10px] bg-black sm:w-[280px] sm:min-w-[280px] sm:max-w-none sm:rounded-[20px] ${rail ? "lg:w-[346.5px] lg:min-w-[346.5px]" : "lg:w-auto lg:min-w-0"}`}>
     <Image src={reel.poster} alt={`${reel.handle} featured reel`} fill sizes="(max-width: 640px) 45vw, 280px" className={`object-cover transition-opacity ${playing ? "opacity-0" : "opacity-100"}`} />
-    <video ref={videoRef} src={reel.video} poster={reel.poster} preload="metadata" loop muted playsInline onPlay={() => { setPlaying(true); onPlaybackChange?.(true); }} onPause={() => { setPlaying(false); onPlaybackChange?.(false); }} className="absolute inset-0 h-full w-full object-cover" aria-label={`${reel.handle} featured video`} />
+    <video ref={videoRef} src={reel.video} poster={reel.poster} preload="none" loop muted playsInline onPlay={() => { setPlaying(true); onPlaybackChange?.(true); }} onPause={() => { setPlaying(false); onPlaybackChange?.(false); }} className="absolute inset-0 h-full w-full object-cover" aria-label={`${reel.handle} featured video`} />
     <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/75" />
     <button type="button" onClick={togglePlay} aria-label={playing ? "Pause featured reel" : "Play featured reel"} className={`absolute left-1/2 top-1/2 z-10 grid size-12 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full bg-[#9b7868]/85 text-white transition hover:scale-105 md:size-14 ${playing ? "lg:opacity-0 group-hover:opacity-100 group-focus-within:opacity-100" : "opacity-100"}`}>
       {playing ? <Pause size={20} fill="currentColor" /> : <Play className="translate-x-px" size={20} fill="currentColor" />}
@@ -80,8 +80,8 @@ export function FeaturedReels({ items = homeReels }: { items?: FeaturedReel[] })
   </div>;
 
   return <>
-    <div className="rail mx-auto mb-8 flex w-full max-w-max gap-3 overflow-x-auto px-5 md:mb-[50px]">
-      {["All Reels", "School Reels", "Wedding Reels", "Office Reels"].map(label => <button key={label} type="button" onClick={() => setFilter(label)} className={`h-[45px] shrink-0 rounded-full border px-[23px] text-base font-semibold shadow-[0_0_26px_rgba(214,255,1,.08)] transition ${filter === label ? "border-[#15140f] bg-[#d6ff01] text-[#15140f]" : "border-[#15140f]/10 text-[#15140f]/70 hover:border-[#15140f]/30"}`}>{label}</button>)}
+    <div className="mx-auto mb-8 flex max-w-[390px] flex-wrap justify-center gap-2 px-4 md:mb-[50px] md:max-w-max md:gap-3">
+      {["All Reels", "School Reels", "Wedding Reels", "Office Reels"].map(label => <button key={label} type="button" onClick={() => setFilter(label)} className={`min-h-8 shrink-0 rounded-full border px-3 text-[11px] font-medium shadow-[0_0_26px_rgba(214,255,1,.08)] transition md:min-h-[45px] md:px-[23px] md:text-base md:font-semibold ${filter === label ? "border-[#15140f] bg-[#d6ff01] text-[#15140f]" : "border-[#15140f]/10 text-[#15140f]/70 hover:border-[#15140f]/30"}`}>{label}</button>)}
     </div>
     <div className={`continuous-slider touch-slider ${playingCount ? "is-paused" : ""}`} role="region" aria-label="Featured reels — swipe to browse" tabIndex={0}>
       <div className="continuous-track continuous-track--reels">

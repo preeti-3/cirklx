@@ -9,8 +9,8 @@ const quote = "CirklX is one of the most creative digital marketing agencies in 
 
 const testimonials = [
   { name: "Arjun Malhotra", followers: "112k Followers", avatar: "/figma/exact/testimonial-avatar.png", poster: "/figma/exact/testimonial-poster.png", video: "/video2-opt.mp4" },
-  { name: "Rohit Mehta", followers: "403k Followers", avatar: "/man2.png", poster: "/thumb1.png", video: "/video1-opt.mp4" },
-  { name: "Nikhil Sharma", followers: "215k Followers", avatar: "/man3.png", poster: "/thumb4.png", video: "/video3-opt.mp4" },
+  { name: "Rohit Mehta", followers: "403k Followers", avatar: "/man2.png", poster: "/thumb1.webp", video: "/video1-opt.mp4" },
+  { name: "Nikhil Sharma", followers: "215k Followers", avatar: "/man3.png", poster: "/thumb4.webp", video: "/video3-opt.mp4" },
 ];
 
 type Testimonial = (typeof testimonials)[number];
@@ -30,7 +30,7 @@ function Person({ item, inverse = false }: { item: Testimonial; inverse?: boolea
 }
 
 function QuoteCard({ item }: { item: Testimonial }) {
-  return <article className="flex h-[496px] flex-col justify-between overflow-hidden rounded-[26px] bg-white p-6 shadow-[0_4px_16px_rgba(0,0,0,.05)]">
+  return <article className="testimonial-quote flex h-[496px] flex-col justify-between overflow-hidden rounded-[26px] bg-white p-6 shadow-[0_4px_16px_rgba(0,0,0,.05)]">
     <div className="flex h-10 items-start justify-between">
       <Image src="/figma/exact/quote-open.svg" alt="" width={40} height={40} className="rotate-180" />
       <Stars />
@@ -52,13 +52,13 @@ function VideoCard({ item }: { item: Testimonial }) {
     if (video.paused) await video.play(); else video.pause();
   };
 
-  return <article className="relative mx-auto h-[496px] w-full max-w-[359px] overflow-hidden rounded-[26px] bg-black">
-    <video ref={videoRef} key={item.video} src={item.video} poster={item.poster} preload="metadata" muted playsInline loop onPlay={() => setPlaying(true)} onPause={() => setPlaying(false)} className="absolute inset-0 size-full object-cover" aria-label={`${item.name} testimonial video`} />
+  return <article className="testimonial-video relative mx-auto h-[496px] w-full max-w-[359px] overflow-hidden rounded-[26px] bg-black">
+    <video ref={videoRef} key={item.video} src={item.video} poster={item.poster} preload="none" muted playsInline loop onPlay={() => setPlaying(true)} onPause={() => setPlaying(false)} className="absolute inset-0 size-full object-cover" aria-label={`${item.name} testimonial video`} />
     <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/75" />
     <button type="button" onClick={toggle} aria-label={playing ? "Pause testimonial video" : "Play testimonial video"} className={`absolute left-1/2 top-[calc(50%-41px)] z-10 size-10 -translate-x-1/2 -translate-y-1/2 transition ${playing ? "opacity-0 hover:opacity-100 focus:opacity-100" : "opacity-100"}`}>
       {playing ? <Pause className="size-10 rounded-full bg-black/50 p-2 text-white" /> : <Image src="/figma/exact/testimonial-play.svg" alt="" width={40} height={40} />}
     </button>
-    <div className="absolute inset-x-5 bottom-5 z-10 rounded-[20px] bg-white/10 p-[10px] text-white backdrop-blur-[32px]">
+    <div className="testimonial-caption absolute inset-x-5 bottom-5 z-10 rounded-[20px] bg-white/10 p-[10px] text-white backdrop-blur-[32px]">
       <p className="text-base italic leading-[1.5]">CirklX is one of the most creative digital marketing agencies in Hisar. Their video shoots are professionally planned, and the editing quality is excellent.</p>
       <div className="mt-[15px] flex items-end justify-between gap-2">
         <span className="leading-none"><strong className="block whitespace-nowrap text-lg font-semibold">{item.name}</strong><small className="mt-1 block text-base">{item.followers}</small></span>
@@ -80,8 +80,10 @@ export function TestimonialSlider() {
     if (!element) return;
     const resize = new ResizeObserver(() => {
       setVisible(window.innerWidth >= 768 ? 3 : 1);
-      element.scrollTo({ left: 0 });
-      setActive(0);
+      const first = window.innerWidth >= 768 ? 0 : 1;
+      const slide = element.children[0] as HTMLElement;
+      element.scrollTo({ left: first * (slide.clientWidth + 24), behavior: 'instant' });
+      setActive(first);
     });
     resize.observe(element);
     return () => resize.disconnect();
@@ -90,19 +92,19 @@ export function TestimonialSlider() {
     const element = viewport.current;
     if (!element) return;
     const next = Math.max(0, Math.min(last, active + step));
-    const width = (element.clientWidth - (visible - 1) * 24) / visible;
+    const width = (element.children[0] as HTMLElement).clientWidth;
     element.querySelectorAll('video').forEach(video => video.pause());
     element.scrollTo({ left: next * (width + 24), behavior: reduceMotion ? 'instant' : 'smooth' });
     setActive(next);
   };
 
-  return <div className="mx-auto max-w-[1140px]">
-    <div ref={viewport} className="rail flex gap-6 overflow-x-auto" onScroll={event => {
+  return <div className="testimonial-slider mx-auto max-w-[1140px]">
+    <div ref={viewport} className="testimonial-rail rail flex gap-6 overflow-x-auto" onScroll={event => {
       const element = event.currentTarget;
-      const width = (element.clientWidth - (visible - 1) * 24) / visible;
+      const width = (element.children[0] as HTMLElement).clientWidth;
       setActive(Math.max(0, Math.min(last, Math.round(element.scrollLeft / (width + 24)))));
     }}>
-      {slides.map(({item, type}, index) => <div key={`${item.name}-${type}`} className="w-full shrink-0 md:w-[calc((100%-48px)/3)]" aria-label={`Testimonial ${index + 1} of ${slides.length}`}>
+      {slides.map(({item, type}, index) => <div key={`${item.name}-${type}`} className="testimonial-slide w-full shrink-0 md:w-[calc((100%-48px)/3)]" aria-label={`Testimonial ${index + 1} of ${slides.length}`}>
         {type === 'quote' ? <QuoteCard item={item} /> : <VideoCard item={item} />}
       </div>)}
     </div>
